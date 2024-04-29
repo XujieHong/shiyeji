@@ -1,52 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="50.0px">
-        <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="K1: " />
-                <EditText android:id="@+id/edit_k1" android:layout_width="200.0px" android:layout_height="wrap_content" android:text="1.0" />
-            </LinearLayout>
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <Button android:id="@+id/btn_reduceK1" android:layout_width="250.0px" android:layout_height="100.0px" android:text="-" />
-                <SeekBar android:layout_gravity="center" android:id="@+id/seekBar_k1" android:layout_width="500.0px" android:layout_height="wrap_content" android:max="1000" android:progress="0" />
-                <Button android:id="@+id/btn_increaseK1" android:layout_width="250.0px" android:layout_height="100.0px" android:text="+" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0px">
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="K2: " />
-                <EditText android:id="@+id/edit_k2" android:layout_width="200.0px" android:layout_height="wrap_content" android:text="1.0" />
-            </LinearLayout>
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <Button android:id="@+id/btn_reduceK2" android:layout_width="250.0px" android:layout_height="100.0px" android:text="-" />
-                <SeekBar android:layout_gravity="center" android:id="@+id/seekBar_k2" android:layout_width="500.0px" android:layout_height="wrap_content" android:max="1000" android:progress="0" />
-                <Button android:id="@+id/btn_increaseK2" android:layout_width="250.0px" android:layout_height="100.0px" android:text="+" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0px">
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="K2: " />
-                <EditText android:id="@+id/edit_k3" android:layout_width="200.0px" android:layout_height="wrap_content" android:text="1.0" />
-            </LinearLayout>
-            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <Button android:id="@+id/btn_reduceK3" android:layout_width="250.0px" android:layout_height="100.0px" android:text="-" />
-                <SeekBar android:layout_gravity="center" android:id="@+id/seekBar_k3" android:layout_width="500.0px" android:layout_height="wrap_content" android:max="1000" android:progress="0" />
-                <Button android:id="@+id/btn_increaseK3" android:layout_width="250.0px" android:layout_height="100.0px" android:text="+" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0px">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Width: " />
-            <EditText android:id="@+id/edit_width" android:layout_width="200.0px" android:layout_height="wrap_content" android:text="1280" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Height: " />
-            <EditText android:id="@+id/edit_height" android:layout_width="200.0px" android:layout_height="wrap_content" android:text="1280" />
-            <Button android:id="@+id/set_param" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="100.0px" android:text="设置" android:onClick="setParams" />
-        </LinearLayout>
-        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="50.0px">
-            <Button android:id="@+id/set_default" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="恢复默认" android:onClick="setDefault" />
-            <Button android:id="@+id/set_image_previous" android:layout_width="250.0px" android:layout_height="wrap_content" android:layout_marginLeft="50.0px" android:text="前一张" android:onClick="selectPreviousImage" />
-            <Button android:id="@+id/set_image_next" android:layout_width="250.0px" android:layout_height="wrap_content" android:layout_marginLeft="50.0px" android:text="后一张" android:onClick="selectNextImage" />
-        </LinearLayout>
-        <TextView android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="测试图片请存在存储目录下samples文件夹里" />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+<!--        <EditText-->
+<!--            android:id="@+id/asb_text"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:inputType="number"-->
+<!--            android:hint="Enter number"-->
+<!--            tools:ignore="gone"/>-->
+<!--        -->
+<!--        <Button-->
+<!--            android:text="确定"-->
+<!--            android:id="@+id/confirm_button"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            tools:ignore="gone"/>-->
+
+        <Button
+            android:text="显示模式切换"
+            android:id="@+id/loop_button"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center" />
+
     </LinearLayout>
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
