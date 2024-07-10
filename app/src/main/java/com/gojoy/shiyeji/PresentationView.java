@@ -6,6 +6,7 @@ import static java.lang.Math.PI;
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 import static java.lang.Math.random;
+import static java.lang.Math.tan;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -21,7 +22,8 @@ import java.util.TimerTask;
 public class PresentationView extends View {
     private Paint paint;
 
-    private int RADIUS_SIZE = 10;
+    private final int RADIUS_SIZE = calculateRadiusFromFov(0.43f);
+    private final int FIX_EYE_LIGHT_RADIUS_SIZE = calculateRadiusFromFov(0.43f);;
 
     private final float MAX_EYE_LUMINANCE = 3000.0f * 0.22f; // nits
 
@@ -35,6 +37,9 @@ public class PresentationView extends View {
     private final float BACKGROUND_ASB = 31.4f;
     private int screenWidth = 1920;
     private int screenHeight = 1080;
+
+    private final float FOV_H = 39.1f;
+    private final float FOV_V = 23.2f;
 
     private class Stimulus {
         public int x, y;
@@ -101,15 +106,14 @@ public class PresentationView extends View {
 
         paint = new Paint();
         int[] rgb = calculateRGB(BACKGROUND_ASB, 2);
-        paint.setStrokeWidth(1);
+        paint.setStrokeWidth(1f);
+        paint.setAntiAlias(false);
         paint.setStyle(Paint.Style.FILL);
         setBackgroundColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
 
-
-        int points = STIMULUS.length;
         int rows = 4;
         int cols = 6;
-        int pointsPerRow = points / rows + 1; // 基础点数每行
+        int pointsPerRow = STIMULUS.length / rows + 1; // 基础点数每行
         int index = 0;
 
         // 计算水平间距和垂直间距
@@ -138,6 +142,8 @@ public class PresentationView extends View {
 
         switch (mMode){
             case 0:
+                paint.setColor(Color.rgb(114, 114, 0));
+                canvas.drawCircle(screenWidth / 2, screenHeight / 2, FIX_EYE_LIGHT_RADIUS_SIZE, paint);
                 for(int i = 0 ; i < STIMULUS.length; i++){
                     paint.setColor(Color.rgb(mStimulus[i].r, mStimulus[i].g, mStimulus[i].b));
                     canvas.drawCircle(mStimulus[i].x, mStimulus[i].y, RADIUS_SIZE, paint);
@@ -145,6 +151,8 @@ public class PresentationView extends View {
                 break;
 
             case 1:
+                paint.setColor(Color.rgb(114, 114, 0));
+                canvas.drawCircle(screenWidth / 2, screenHeight / 2, FIX_EYE_LIGHT_RADIUS_SIZE, paint);
                 if(mStimulusShow){
                     paint.setColor(Color.rgb(mStimulus[mDisplayIndex].r, mStimulus[mDisplayIndex].g, mStimulus[mDisplayIndex].b));
                     canvas.drawCircle(mStimulus[mDisplayIndex].x, mStimulus[mDisplayIndex].y, RADIUS_SIZE, paint);
@@ -152,6 +160,8 @@ public class PresentationView extends View {
                 break;
 
             case 2:
+                paint.setColor(Color.rgb(114, 114, 0));
+                canvas.drawCircle(screenWidth / 2, screenHeight / 2, FIX_EYE_LIGHT_RADIUS_SIZE, paint);
                 if(mStimulusShow){
                     Random random = new Random();
                     int min = 10;
@@ -162,6 +172,22 @@ public class PresentationView extends View {
                     paint.setColor(Color.rgb(mStimulus[mDisplayIndex].r, mStimulus[mDisplayIndex].g, mStimulus[mDisplayIndex].b));
                     canvas.drawCircle(x, y, RADIUS_SIZE, paint);
                 }
+                break;
+
+            case 3:
+                setBackgroundColor(Color.rgb(255, 255, 255));
+                for(int y = 0; y < 5; y++){
+                    for(int x = 0; x < 5; x++){
+                        if((y == 1 || y == 3) && x > 0){
+                            paint.setColor(Color.rgb(255, 255,255));
+                        }
+                        else{
+                            paint.setColor(Color.rgb(0, 0,0));
+                        }
+                        canvas.drawPoint(screenWidth / 2 + x - 2, screenHeight / 2 + y - 2,  paint);
+                    }
+                }
+
                 break;
 
             default:
@@ -209,9 +235,29 @@ public class PresentationView extends View {
     }
 
     public void loopPlay() {
-        if(++mMode > 2){
+        if(++mMode > 3){
             mMode = 0;
         }
+
+        int[] rgb = calculateRGB(BACKGROUND_ASB, 2);
+        if(mMode == 3){
+            setBackgroundColor(Color.rgb(255, 255, 255));
+        }
+        else{
+            setBackgroundColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
+        }
+
         invalidate();
     }
+
+    int calculateRadiusFromFov(float fov){
+        float halfG3Fov = (float) (fov * PI / 180.0f / 2.0f);
+        float halfBBFovH = (float) (FOV_H * PI / 180 / 2);
+        float halfBBFovV = (float) (FOV_V * PI / 180 / 2);
+        float deltaX = (float) (tan(halfG3Fov) * (1920 / 2) / tan(halfBBFovH));
+        float deltaY = (float) (tan(halfG3Fov) * (1080 / 2) / tan(halfBBFovV));
+
+        return (int) ((deltaX + deltaY) / 2.0f);
+    }
+
 }
